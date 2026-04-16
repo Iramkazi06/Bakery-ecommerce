@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SweetBite — Handcrafted Bakery Delights</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">🍰 SweetBite</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2">
+        <a href="cart.html" class="btn btn-outline-secondary rounded-pill position-relative me-1">
+          <i class="bi bi-cart3 fs-5"></i>
+          <span class="cart-badge badge bg-danger rounded-pill position-absolute" style="top:-6px;right:-6px;font-size:0.65rem">0</span>
+        </a>
+        <a href="login.html" class="btn btn-secondary-custom btn-sm">Login</a>
+        <a href="register.html" class="btn btn-primary-custom btn-sm">Register</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center min-vh-75 py-5">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <span class="badge mb-3 px-3 py-2" style="background:rgba(255,107,157,0.15);color:var(--primary);font-size:0.85rem;border-radius:50px">🌟 India's #1 Online Bakery</span>
+        <h1 style="font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.2;color:var(--secondary)">
+          Indulge in<br><em style="color:var(--primary)">Every Bite</em> 🍰
+        </h1>
+        <p class="lead mt-3 mb-4" style="color:var(--text-muted)">Handcrafted desserts delivered fresh to your door. Made with love, baked to perfection.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="shop.html" class="btn btn-primary-custom px-4 py-2">
+            <i class="bi bi-bag-heart me-2"></i>Shop Now
+          </a>
+          <a href="register.html" class="btn btn-secondary-custom px-4 py-2">
+            <i class="bi bi-shop me-2"></i>Become a Vendor
+          </a>
+        </div>
+        <div class="d-flex gap-4 mt-4">
+          <div><strong style="font-family:Playfair Display,serif;font-size:1.5rem;color:var(--secondary)">500+</strong><br><small style="color:var(--text-muted)">Products</small></div>
+          <div><strong style="font-family:Playfair Display,serif;font-size:1.5rem;color:var(--secondary)">50K+</strong><br><small style="color:var(--text-muted)">Happy Customers</small></div>
+          <div><strong style="font-family:Playfair Display,serif;font-size:1.5rem;color:var(--secondary)">100%</strong><br><small style="color:var(--text-muted)">Natural</small></div>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center">
+        <div class="row g-3 justify-content-center">
+          <div class="col-4"><span class="float-emoji">🍦</span></div>
+          <div class="col-4"><span class="float-emoji">🎂</span></div>
+          <div class="col-4"><span class="float-emoji">🍫</span></div>
+          <div class="col-4"><span class="float-emoji">🧁</span></div>
+          <div class="col-4"><span class="float-emoji">🍮</span></div>
+          <div class="col-4"><span class="float-emoji">🍪</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY CARDS -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="section-title">Browse Categories</h2>
+      <p class="section-subtitle">Something sweet for every craving</p>
+    </div>
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="category-card" onclick="window.location.href='shop.html?cat=icecream'">
+          <div style="font-size:2.5rem">🍦</div>
+          <div class="fw-bold mt-2" style="font-size:0.9rem">Ice Cream</div>
+          <div class="text-muted" style="font-size:0.75rem">8 items</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="category-card" onclick="window.location.href='shop.html?cat=chocolate'">
+          <div style="font-size:2.5rem">🍫</div>
+          <div class="fw-bold mt-2" style="font-size:0.9rem">Chocolates</div>
+          <div class="text-muted" style="font-size:0.75rem">12 items</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="category-card" onclick="window.location.href='shop.html?cat=dessert'">
+          <div style="font-size:2.5rem">🍮</div>
+          <div class="fw-bold mt-2" style="font-size:0.9rem">Desserts</div>
+          <div class="text-muted" style="font-size:0.75rem">15 items</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="category-card" onclick="window.location.href='shop.html?cat=cake'">
+          <div style="font-size:2.5rem">🎂</div>
+          <div class="fw-bold mt-2" style="font-size:0.9rem">Cakes</div>
+          <div class="text-muted" style="font-size:0.75rem">10 items</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="category-card" onclick="window.location.href='shop.html?cat=cookie'">
+          <div style="font-size:2.5rem">🍪</div>
+          <div class="fw-bold mt-2" style="font-size:0.9rem">Cookies</div>
+          <div class="text-muted" style="font-size:0.75rem">9 items</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="category-card" onclick="window.location.href='shop.html?cat=cupcake'">
+          <div style="font-size:2.5rem">🧁</div>
+          <div class="fw-bold mt-2" style="font-size:0.9rem">Cupcakes</div>
+          <div class="text-muted" style="font-size:0.75rem">7 items</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="py-5" style="background:var(--bg-cream)">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="section-title">Our Best Sellers ⭐</h2>
+      <p class="section-subtitle">Customer favorites, fresh every day</p>
+    </div>
+    <div class="row" id="featuredProducts"></div>
+    <div class="text-center mt-3">
+      <a href="shop.html" class="btn btn-primary-custom px-5">View All Products <i class="bi bi-arrow-right ms-2"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="py-5 bg-white" id="about">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="section-title">Why Choose SweetBite?</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-box">
+          <div class="feature-icon">🥖</div>
+          <h5>Baked Fresh Daily</h5>
+          <p class="text-muted">Every item is baked fresh each morning. No preservatives, no compromise on freshness.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-box">
+          <div class="feature-icon">🚚</div>
+          <h5>Free Delivery ₹500+</h5>
+          <p class="text-muted">Order above ₹500 and get free home delivery. Fast, safe, and temperature-controlled.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-box">
+          <div class="feature-icon">🌿</div>
+          <h5>100% Natural</h5>
+          <p class="text-muted">We use only natural ingredients. No artificial colors, no harmful additives. Just goodness.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="py-5" style="background:linear-gradient(135deg,#FFE8F0,#FFF0CC)">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="section-title">What Our Customers Say 💬</h2>
+    </div>
+    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="testimonial-card mx-auto" style="max-width:600px">
+            <div class="testimonial-avatar">👩</div>
+            <p class="fst-italic fs-5">"The best desserts I've ever tasted! The Tiramisu is absolutely divine. Will order again and again!"</p>
+            <div class="stars mb-1">★★★★★</div>
+            <strong>Priya Sharma</strong><br><small class="text-muted">Mumbai</small>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="testimonial-card mx-auto" style="max-width:600px">
+            <div class="testimonial-avatar">👨</div>
+            <p class="fst-italic fs-5">"Ordered the Belgian Chocolate Box for my wife's birthday. She loved it! Fast delivery, beautiful packaging."</p>
+            <div class="stars mb-1">★★★★★</div>
+            <strong>Rahul Mehta</strong><br><small class="text-muted">Pune</small>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="testimonial-card mx-auto" style="max-width:600px">
+            <div class="testimonial-avatar">👩‍🦱</div>
+            <p class="fst-italic fs-5">"The Red Velvet Cupcakes are out of this world. My kids go crazy for them every weekend!"</p>
+            <div class="stars mb-1">★★★★☆</div>
+            <strong>Anita Kulkarni</strong><br><small class="text-muted">Nashik</small>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" style="filter:invert(1)"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" style="filter:invert(1)"></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-main" id="contact">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-3">
+        <h5>🍰 SweetBite</h5>
+        <p style="color:rgba(255,255,255,0.7);font-size:0.9rem">Handcrafted desserts made with love, delivered fresh to your door across India.</p>
+        <div class="d-flex gap-3 mt-3">
+          <a href="#" class="text-white fs-5"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-white fs-5"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-white fs-5"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="text-white fs-5"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <h6>Quick Links</h6>
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="shop.html" class="footer-link">Shop</a>
+        <a href="login.html" class="footer-link">Login</a>
+        <a href="register.html" class="footer-link">Register</a>
+        <a href="cart.html" class="footer-link">Cart</a>
+      </div>
+      <div class="col-md-3">
+        <h6>Categories</h6>
+        <a href="shop.html?cat=icecream" class="footer-link">🍦 Ice Cream</a>
+        <a href="shop.html?cat=chocolate" class="footer-link">🍫 Chocolates</a>
+        <a href="shop.html?cat=cake" class="footer-link">🎂 Cakes</a>
+        <a href="shop.html?cat=dessert" class="footer-link">🍮 Desserts</a>
+        <a href="shop.html?cat=cookie" class="footer-link">🍪 Cookies</a>
+      </div>
+      <div class="col-md-3">
+        <h6>Newsletter</h6>
+        <p style="color:rgba(255,255,255,0.7);font-size:0.85rem">Get sweet deals straight to your inbox!</p>
+        <div class="input-group">
+          <input type="email" class="form-control rounded-start" placeholder="your@email.com">
+          <button class="btn btn-primary-custom rounded-end" onclick="showToast('Subscribed! 🎉', 'success')">
+            <i class="bi bi-send"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom text-center">
+      <small style="color:rgba(255,255,255,0.6)">© 2024 SweetBite. All rights reserved. Made with ❤️ in India.</small>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/products.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initProducts();
+    const prods = getAllProducts();
+    const container = document.getElementById('featuredProducts');
+    if (container) {
+      container.innerHTML = prods.slice(0, 8).map(p => renderFeaturedCard(p)).join('');
+    }
+  });
+</script>
+</body>
+</html>

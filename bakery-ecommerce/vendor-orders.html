@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders — SweetBite Vendor</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="dashboard-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">🍰 <span class="sidebar-text">SweetBite</span></div>
+    <div class="sidebar-user">
+      <div style="font-size:2.5rem">👨‍🍳</div>
+      <div class="user-name sidebar-text" id="sidebarName">Shop Owner</div>
+      <div class="user-email sidebar-text" id="sidebarEmail">vendor@email.com</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="vendor-dashboard.html" class="sidebar-link">
+        <i class="bi bi-speedometer2"></i><span class="sidebar-text">Dashboard</span>
+      </a>
+      <a href="vendor-products.html" class="sidebar-link">
+        <i class="bi bi-bag"></i><span class="sidebar-text">My Products</span>
+      </a>
+      <a href="vendor-orders.html" class="sidebar-link active">
+        <i class="bi bi-box-seam"></i><span class="sidebar-text">Orders</span>
+      </a>
+      <a href="product-list.html" class="sidebar-link">
+        <i class="bi bi-people"></i><span class="sidebar-text">Customers</span>
+      </a>
+      <a href="#" class="sidebar-link">
+        <i class="bi bi-gear"></i><span class="sidebar-text">Settings</span>
+      </a>
+      <a href="#" class="sidebar-link" onclick="logoutUser();return false;">
+        <i class="bi bi-box-arrow-left"></i><span class="sidebar-text">Logout</span>
+      </a>
+    </nav>
+    <button class="sidebar-collapse-btn" onclick="toggleSidebar()">
+      <i class="bi bi-chevron-left sidebar-text"></i>
+    </button>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+    <div class="top-navbar">
+      <div class="d-flex align-items-center gap-3">
+        <button class="sidebar-mobile-toggle" onclick="showMobileSidebar()"><i class="bi bi-list fs-5"></i></button>
+        <h5 class="mb-0 fw-bold" style="font-family:Playfair Display,serif">Order Management</h5>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-success btn-sm" onclick="exportOrdersCSV()">
+          <i class="bi bi-download me-1"></i>Export CSV
+        </button>
+        <div class="dropdown">
+          <button class="btn btn-light rounded-circle dropdown-toggle" style="width:40px;height:40px" data-bs-toggle="dropdown">👤</button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <!-- Stats Row -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-3 col-sm-6">
+          <div class="stat-card d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small">Total Orders</div>
+              <div class="stat-value" id="oStatTotal">0</div>
+            </div>
+            <div class="stat-icon stat-icon-pink">📦</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="stat-card d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small">Delivered</div>
+              <div class="stat-value" id="oStatDelivered">0</div>
+            </div>
+            <div class="stat-icon stat-icon-green">✅</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="stat-card d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small">Processing</div>
+              <div class="stat-value" id="oStatProcessing">0</div>
+            </div>
+            <div class="stat-icon stat-icon-blue">🔄</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="stat-card d-flex justify-content-between align-items-center">
+            <div>
+              <div class="text-muted small">Total Revenue</div>
+              <div class="stat-value" id="oStatRevenue">₹0</div>
+            </div>
+            <div class="stat-icon stat-icon-gold">💰</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Table -->
+      <div class="sweet-card p-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h6 class="fw-bold mb-0">All Orders
+            <span class="badge ms-2" id="orderCountBadge" style="background:var(--secondary);color:#fff">0</span>
+          </h6>
+          <div class="d-flex gap-2 flex-wrap">
+            <input type="text" class="form-control form-control-sm" id="orderSearch"
+              placeholder="🔍 Search by customer or ID..." style="width:220px">
+            <select class="form-select form-select-sm" id="statusFilter" style="width:140px">
+              <option value="">All Status</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Processing">Processing</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-sweet table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Amount</th>
+                <th>Payment</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="vendorOrdersBody"></tbody>
+          </table>
+        </div>
+        <div id="ordersTableEmpty" class="text-center py-5 d-none">
+          <div style="font-size:4rem;opacity:0.3">📦</div>
+          <h5>No orders yet</h5>
+          <p class="text-muted">Orders placed by customers will appear here.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Order Detail Modal -->
+<div class="modal fade" id="orderDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-xl">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">📦 Order Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="orderDetailBody"></div>
+      <div class="modal-footer border-0">
+        <select class="form-select form-select-sm" id="statusUpdateSelect" style="width:160px">
+          <option>Confirmed</option>
+          <option>Processing</option>
+          <option>Out for Delivery</option>
+          <option>Delivered</option>
+        </select>
+        <button class="btn btn-primary-custom" onclick="updateOrderStatus()">Update Status</button>
+        <button class="btn btn-secondary-custom" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar overlay -->
+<div id="sidebarOverlay" class="d-none" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1029" onclick="hideMobileSidebar()"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+<script>
+  let allOrders = [];
+  let currentOrderId = null;
+
+  const SAMPLE_ORDERS = [
+    {id:'#SB001', customer:'Priya S.', email:'priya@email.com', items:[{emoji:'🍫',name:'Dark Truffle',qty:2,price:350}], total:700, paymentMethod:'Card', date:'28/03/2024', status:'Delivered'},
+    {id:'#SB002', customer:'Rahul M.', email:'rahul@email.com', items:[{emoji:'🍮',name:'Tiramisu',qty:1,price:420}], total:420, paymentMethod:'UPI', date:'27/03/2024', status:'Processing'},
+    {id:'#SB003', customer:'Anita K.', email:'anita@email.com', items:[{emoji:'🟡',name:'Kulfi × 3',qty:3,price:250}], total:750, paymentMethod:'COD', date:'26/03/2024', status:'Pending'},
+    {id:'#SB004', customer:'Vikram J.', email:'vikram@email.com', items:[{emoji:'🎂',name:'Vanilla Cake',qty:1,price:560}], total:560, paymentMethod:'Card', date:'25/03/2024', status:'Delivered'},
+    {id:'#SB005', customer:'Sneha R.', email:'sneha@email.com', items:[{emoji:'🎁',name:'Choco Box',qty:1,price:699}], total:699, paymentMethod:'NetBanking', date:'24/03/2024', status:'Processing'}
+  ];
+
+  function loadOrders() {
+    const real = JSON.parse(localStorage.getItem('sweetbite_orders')) || [];
+    allOrders = [...SAMPLE_ORDERS, ...real];
+
+    const total = allOrders.length;
+    const delivered = allOrders.filter(o => o.status === 'Delivered').length;
+    const processing = allOrders.filter(o => o.status === 'Processing' || o.status === 'Pending').length;
+    const revenue = allOrders.reduce((s, o) => s + (o.total || 0), 0);
+
+    countUp(document.getElementById('oStatTotal'), total);
+    countUp(document.getElementById('oStatDelivered'), delivered);
+    countUp(document.getElementById('oStatProcessing'), processing);
+    countUp(document.getElementById('oStatRevenue'), revenue, '₹');
+    document.getElementById('orderCountBadge').textContent = total;
+    renderOrdersTable(allOrders);
+  }
+
+  function renderOrdersTable(orders) {
+    const tbody = document.getElementById('vendorOrdersBody');
+    const empty = document.getElementById('ordersTableEmpty');
+    if (!orders.length) { tbody.innerHTML = ''; empty.classList.remove('d-none'); return; }
+    empty.classList.add('d-none');
+
+    const badge = s => {
+      const map = { Delivered: 'success', Processing: 'warning text-dark', Pending: 'danger', Confirmed: 'primary' };
+      return `<span class="badge bg-${map[s]||'secondary'}">${s}</span>`;
+    };
+
+    tbody.innerHTML = orders.map(o => `
+      <tr>
+        <td><strong>${o.id}</strong></td>
+        <td>${o.customer}</td>
+        <td><small>${Array.isArray(o.items) ? o.items.map(i=>i.emoji+' '+i.name+' ×'+i.qty).join(', ') : ''}</small></td>
+        <td><strong>₹${o.total}</strong></td>
+        <td><small>${o.paymentMethod || '—'}</small></td>
+        <td><small>${o.date}</small></td>
+        <td>${badge(o.status)}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary" onclick="viewOrder('${o.id}')">
+            <i class="bi bi-eye me-1"></i>View
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function viewOrder(id) {
+    currentOrderId = id;
+    const o = allOrders.find(x => x.id === id);
+    if (!o) return;
+    document.getElementById('statusUpdateSelect').value = o.status;
+    document.getElementById('orderDetailBody').innerHTML = `
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <div class="p-3 rounded-3" style="background:var(--bg-cream)">
+            <div class="text-muted small">Order ID</div>
+            <div class="fw-bold">${o.id}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="p-3 rounded-3" style="background:var(--bg-cream)">
+            <div class="text-muted small">Order Date</div>
+            <div class="fw-bold">${o.date}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="p-3 rounded-3" style="background:var(--bg-cream)">
+            <div class="text-muted small">Customer</div>
+            <div class="fw-bold">${o.customer}</div>
+            <small class="text-muted">${o.email || ''}</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="p-3 rounded-3" style="background:var(--bg-cream)">
+            <div class="text-muted small">Payment Method</div>
+            <div class="fw-bold">${o.paymentMethod || '—'}</div>
+          </div>
+        </div>
+      </div>
+      <h6 class="fw-bold mb-2">Order Items</h6>
+      <table class="table table-bordered table-sm">
+        <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr></thead>
+        <tbody>
+          ${Array.isArray(o.items) ? o.items.map(i => `
+            <tr>
+              <td>${i.emoji||''} ${i.name}</td>
+              <td>${i.qty}</td>
+              <td>₹${i.price}</td>
+              <td>₹${(i.price*i.qty)}</td>
+            </tr>
+          `).join('') : `<tr><td colspan="4">${o.items || '—'}</td></tr>`}
+        </tbody>
+        <tfoot>
+          <tr><th colspan="3">Grand Total</th><th>₹${o.total}</th></tr>
+        </tfoot>
+      </table>
+      ${o.address ? `
+        <h6 class="fw-bold mb-2">Delivery Address</h6>
+        <p class="text-muted mb-0">${[o.address.address, o.address.city, o.address.state, o.address.pin].filter(Boolean).join(', ')}</p>
+      ` : ''}
+    `;
+    new bootstrap.Modal(document.getElementById('orderDetailModal')).show();
+  }
+
+  function updateOrderStatus() {
+    if (!currentOrderId) return;
+    const newStatus = document.getElementById('statusUpdateSelect').value;
+
+    // Update in sample orders
+    const sampleIdx = SAMPLE_ORDERS.findIndex(o => o.id === currentOrderId);
+    if (sampleIdx !== -1) SAMPLE_ORDERS[sampleIdx].status = newStatus;
+
+    // Update in localStorage orders
+    let real = JSON.parse(localStorage.getItem('sweetbite_orders')) || [];
+    const realIdx = real.findIndex(o => o.id === currentOrderId);
+    if (realIdx !== -1) { real[realIdx].status = newStatus; localStorage.setItem('sweetbite_orders', JSON.stringify(real)); }
+
+    bootstrap.Modal.getInstance(document.getElementById('orderDetailModal'))?.hide();
+    showToast('Order status updated to ' + newStatus, 'success');
+    loadOrders();
+  }
+
+  function filterOrders() {
+    const search = document.getElementById('orderSearch').value.toLowerCase();
+    const status = document.getElementById('statusFilter').value;
+    const filtered = allOrders.filter(o => {
+      const matchSearch = !search || o.id.toLowerCase().includes(search) || o.customer.toLowerCase().includes(search);
+      const matchStatus = !status || o.status === status;
+      return matchSearch && matchStatus;
+    });
+    renderOrdersTable(filtered);
+  }
+
+  function exportOrdersCSV() {
+    const data = allOrders.map(o => ({
+      OrderID: o.id, Customer: o.customer, Email: o.email || '',
+      Total: o.total, Payment: o.paymentMethod || '', Date: o.date, Status: o.status
+    }));
+    exportToCSV(data, 'sweetbite_orders.csv');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const session = checkSession('vendor');
+    if (!session) return;
+    document.getElementById('sidebarName').textContent = session.shopName || session.name;
+    document.getElementById('sidebarEmail').textContent = session.email;
+    loadOrders();
+    document.getElementById('orderSearch').addEventListener('input', filterOrders);
+    document.getElementById('statusFilter').addEventListener('change', filterOrders);
+  });
+</script>
+</body>
+</html>

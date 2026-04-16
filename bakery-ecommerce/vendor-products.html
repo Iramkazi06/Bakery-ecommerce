@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Products — SweetBite Vendor</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="dashboard-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">🍰 <span class="sidebar-text">SweetBite</span></div>
+    <div class="sidebar-user">
+      <div style="font-size:2.5rem">👨‍🍳</div>
+      <div class="user-name sidebar-text" id="sidebarName">Shop Owner</div>
+      <div class="user-email sidebar-text" id="sidebarEmail">vendor@email.com</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="vendor-dashboard.html" class="sidebar-link">
+        <i class="bi bi-speedometer2"></i><span class="sidebar-text">Dashboard</span>
+      </a>
+      <a href="vendor-products.html" class="sidebar-link active">
+        <i class="bi bi-bag"></i><span class="sidebar-text">My Products</span>
+      </a>
+      <a href="vendor-orders.html" class="sidebar-link">
+        <i class="bi bi-box-seam"></i><span class="sidebar-text">Orders</span>
+      </a>
+      <a href="product-list.html" class="sidebar-link">
+        <i class="bi bi-people"></i><span class="sidebar-text">Customers</span>
+      </a>
+      <a href="#" class="sidebar-link">
+        <i class="bi bi-gear"></i><span class="sidebar-text">Settings</span>
+      </a>
+      <a href="#" class="sidebar-link" onclick="logoutUser();return false;">
+        <i class="bi bi-box-arrow-left"></i><span class="sidebar-text">Logout</span>
+      </a>
+    </nav>
+    <button class="sidebar-collapse-btn" onclick="toggleSidebar()">
+      <i class="bi bi-chevron-left sidebar-text"></i>
+    </button>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+    <div class="top-navbar">
+      <div class="d-flex align-items-center gap-3">
+        <button class="sidebar-mobile-toggle" onclick="showMobileSidebar()"><i class="bi bi-list fs-5"></i></button>
+        <h5 class="mb-0 fw-bold" style="font-family:Playfair Display,serif">My Products</h5>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-primary-custom btn-sm" onclick="openEditModal()">
+          <i class="bi bi-plus-circle me-2"></i>Add New Product
+        </button>
+        <div class="dropdown">
+          <button class="btn btn-light rounded-circle dropdown-toggle" style="width:40px;height:40px" data-bs-toggle="dropdown">👤</button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <div class="sweet-card p-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <div>
+            <h6 class="fw-bold mb-1">Product Catalogue
+              <span class="badge ms-2" id="prodCountBadge" style="background:var(--primary);color:#fff">0</span>
+            </h6>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <input type="text" class="form-control form-control-sm" id="prodSearchVendor"
+              placeholder="🔍 Search products..." style="width:200px">
+            <select class="form-select form-select-sm" id="catFilterVendor" style="width:150px">
+              <option value="">All Categories</option>
+              <option value="icecream">Ice Cream</option>
+              <option value="chocolate">Chocolates</option>
+              <option value="dessert">Desserts</option>
+              <option value="cake">Cakes</option>
+              <option value="cookie">Cookies</option>
+              <option value="cupcake">Cupcakes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-sweet table-hover table-striped align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Emoji</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Orig. Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add/Edit Product Modal -->
+<div class="modal fade" id="productModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-xl">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="productModalTitle">Add New Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="productFormId">
+        <form id="productForm">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="form-label fw-semibold">Product Name *</label>
+              <input type="text" class="form-control" id="pName" required placeholder="e.g. Dark Chocolate Truffle">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">Emoji</label>
+              <input type="text" class="form-control" id="pEmoji" placeholder="🍰" maxlength="4">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Category *</label>
+              <select class="form-select" id="pCategory" required>
+                <option value="">-- Select Category --</option>
+                <option value="icecream">🍦 Ice Cream</option>
+                <option value="chocolate">🍫 Chocolates</option>
+                <option value="dessert">🍮 Desserts</option>
+                <option value="cake">🎂 Cakes</option>
+                <option value="cookie">🍪 Cookies</option>
+                <option value="cupcake">🧁 Cupcakes</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Stock Quantity *</label>
+              <input type="number" class="form-control" id="pStock" min="0" required placeholder="25">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Selling Price (₹) *</label>
+              <input type="number" class="form-control" id="pPrice" min="1" required placeholder="299">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Original Price (₹) *</label>
+              <input type="number" class="form-control" id="pOriginalPrice" min="1" required placeholder="349">
+            </div>
+            <div class="col-12">
+              <label class="form-label fw-semibold">Description</label>
+              <textarea class="form-control" id="pDesc" rows="2" placeholder="Short product description..."></textarea>
+            </div>
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="pFeatured">
+                <label class="form-check-label" for="pFeatured">Feature this product on homepage</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary-custom" id="saveProductBtn" onclick="saveProduct()">
+          <i class="bi bi-check-circle me-2"></i>Save Product
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content rounded-xl">
+      <div class="modal-body text-center p-4">
+        <div style="font-size:3rem">🗑️</div>
+        <h6 class="fw-bold mt-2">Delete Product?</h6>
+        <p class="text-muted">Are you sure you want to delete <strong id="deleteProductName"></strong>? This cannot be undone.</p>
+        <div class="d-flex gap-2 justify-content-center">
+          <button class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar overlay -->
+<div id="sidebarOverlay" class="d-none" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1029" onclick="hideMobileSidebar()"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/products.js"></script>
+<script src="js/dashboard.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initProducts();
+    const session = checkSession('vendor');
+    if (!session) return;
+    document.getElementById('sidebarName').textContent = session.shopName || session.name;
+    document.getElementById('sidebarEmail').textContent = session.email;
+    initVendorProducts();
+    document.getElementById('prodSearchVendor').addEventListener('input', renderProductsTable);
+    document.getElementById('catFilterVendor').addEventListener('change', renderProductsTable);
+  });
+
+  // Override renderProductsTable to support search/filter
+  const _originalRender = renderProductsTable;
+  function renderProductsTable() {
+    const search = document.getElementById('prodSearchVendor')?.value.toLowerCase() || '';
+    const cat = document.getElementById('catFilterVendor')?.value || '';
+    let prods = JSON.parse(localStorage.getItem('sweetbite_products')) || products;
+    if (search) prods = prods.filter(p => p.name.toLowerCase().includes(search));
+    if (cat) prods = prods.filter(p => p.category === cat);
+
+    document.getElementById('prodCountBadge').textContent = prods.length;
+    const tbody = document.getElementById('productsTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = prods.map((p, i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td style="font-size:1.5rem">${p.emoji}</td>
+        <td><strong>${p.name}</strong><br><small class="text-muted">${p.desc || ''}</small></td>
+        <td><span class="badge" style="background:var(--bg-cream);color:var(--secondary)">${categoryNames?.[p.category]||p.category}</span></td>
+        <td><strong>₹${p.price}</strong></td>
+        <td><del class="text-muted">₹${p.originalPrice}</del></td>
+        <td><span class="${p.stock<10?'text-danger fw-bold':''}">${p.stock}</span></td>
+        <td>
+          <div class="form-check form-switch mb-0">
+            <input class="form-check-input" type="checkbox" ${p.active!==false?'checked':''}
+              onchange="toggleProductStatus(${p.id}, this.checked)">
+          </div>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary me-1" onclick="openEditModal(${p.id})" title="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(${p.id},'${p.name.replace(/'/g,"\\'")}')">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+</script>
+</body>
+</html>

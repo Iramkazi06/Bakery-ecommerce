@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "name": "Chocolate Cake",
+        "category": "Cakes",
+        "price": 25.00,
+        "stock": 10,
+        "description": "Delicious chocolate cake made with rich cocoa and topped with chocolate ganache.",
+        "image": "images/chocolate-cake.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Vanilla Cupcake",
+        "category": "Cupcakes",
+        "price": 3.50,
+        "stock": 20,
+        "description": "Fluffy vanilla cupcakes topped with creamy vanilla frosting.",
+        "image": "images/vanilla-cupcake.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Red Velvet Cake",
+        "category": "Cakes",
+        "price": 30.00,
+        "stock": 5,
+        "description": "Classic red velvet cake with cream cheese frosting.",
+        "image": "images/red-velvet-cake.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Lemon Tart",
+        "category": "Tarts",
+        "price": 15.00,
+        "stock": 8,
+        "description": "Tangy lemon tart with a buttery crust and fresh lemon filling.",
+        "image": "images/lemon-tart.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Chocolate Chip Cookies",
+        "category": "Cookies",
+        "price": 1.50,
+        "stock": 50,
+        "description": "Classic chocolate chip cookies, soft and chewy.",
+        "image": "images/chocolate-chip-cookies.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Fruit Cake",
+        "category": "Cakes",
+        "price": 28.00,
+        "stock": 7,
+        "description": "Rich fruit cake loaded with dried fruits and nuts.",
+        "image": "images/fruit-cake.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Cheesecake",
+        "category": "Cakes",
+        "price": 22.00,
+        "stock": 6,
+        "description": "Creamy cheesecake with a graham cracker crust.",
+        "image": "images/cheesecake.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Macarons",
+        "category": "Cookies",
+        "price": 2.00,
+        "stock": 30,
+        "description": "Delicate French macarons in assorted flavors.",
+        "image": "images/macarons.jpg"
+    }
+]

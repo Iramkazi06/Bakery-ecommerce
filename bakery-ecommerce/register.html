@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register — SweetBite</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body style="background:linear-gradient(135deg,var(--bg-cream),#FFE8F0)">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">🍰 SweetBite</a>
+    <div class="d-flex gap-2">
+      <a href="login.html" class="btn btn-secondary-custom btn-sm">Login</a>
+      <a href="cart.html" class="btn btn-outline-secondary rounded-pill position-relative">
+        <i class="bi bi-cart3"></i>
+        <span class="cart-badge badge bg-danger rounded-pill position-absolute" style="top:-6px;right:-6px;font-size:0.65rem">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="sweet-card p-4 p-md-5">
+        <div class="text-center mb-4">
+          <div style="font-size:3rem">🍰</div>
+          <h2 class="section-title">Create Your Account</h2>
+          <p class="text-muted">Join SweetBite — Order desserts or sell your creations!</p>
+        </div>
+
+        <!-- Role Toggle -->
+        <div class="d-flex justify-content-center mb-4">
+          <div class="btn-group" role="group">
+            <input type="radio" class="btn-check" name="roleToggle" id="roleCustomer" value="customer" checked>
+            <label class="btn btn-outline-primary rounded-start-pill px-4" for="roleCustomer">
+              <i class="bi bi-person me-2"></i>Customer
+            </label>
+            <input type="radio" class="btn-check" name="roleToggle" id="roleVendor" value="vendor">
+            <label class="btn btn-outline-warning rounded-end-pill px-4" for="roleVendor">
+              <i class="bi bi-shop me-2"></i>Vendor
+            </label>
+          </div>
+        </div>
+
+        <form id="registerForm" novalidate>
+          <div class="row g-3">
+            <!-- Full Name -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Full Name *</label>
+              <input type="text" class="form-control" id="regName" placeholder="Priya Sharma" required>
+              <div class="invalid-feedback">Please enter your full name.</div>
+            </div>
+            <!-- Email -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Email Address *</label>
+              <input type="email" class="form-control" id="regEmail" placeholder="priya@email.com" required>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+            <!-- Password -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Password *</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="regPassword" placeholder="Min 8 characters" required minlength="8">
+                <button class="btn btn-outline-secondary" type="button" onclick="togglePwd('regPassword',this)">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+              <div class="strength-bar mt-1"><div class="strength-fill" id="strengthFill" style="width:0%"></div></div>
+              <small id="strengthLabel" class="text-muted">Enter password to check strength</small>
+              <div class="invalid-feedback">Password must be at least 8 characters.</div>
+            </div>
+            <!-- Confirm Password -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Confirm Password *</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="regConfirm" placeholder="Repeat password" required>
+                <button class="btn btn-outline-secondary" type="button" onclick="togglePwd('regConfirm',this)">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback">Passwords do not match.</div>
+              <small id="matchLabel"></small>
+            </div>
+            <!-- Phone -->
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Phone Number *</label>
+              <input type="tel" class="form-control" id="regPhone" placeholder="10-digit mobile number" maxlength="10" required>
+              <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+            </div>
+            <!-- City -->
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">City *</label>
+              <input type="text" class="form-control" id="regCity" placeholder="Mumbai" required>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+            <!-- State -->
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">State *</label>
+              <input type="text" class="form-control" id="regState" placeholder="Maharashtra" required>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+            <!-- Address -->
+            <div class="col-12">
+              <label class="form-label fw-semibold">Address</label>
+              <textarea class="form-control" id="regAddress" rows="2" placeholder="Street, Area, City..."></textarea>
+            </div>
+
+            <!-- VENDOR FIELDS (hidden by default) -->
+            <div id="vendorFields" class="col-12 d-none">
+              <hr><h6 class="text-muted mb-3"><i class="bi bi-shop me-2"></i>Vendor Information</h6>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Shop Name *</label>
+                  <input type="text" class="form-control" id="regShopName" placeholder="My Bakery Shop">
+                  <div class="invalid-feedback">Shop name is required for vendors.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">GST Number</label>
+                  <input type="text" class="form-control" id="regGST" placeholder="22AAAAA0000A1Z5" maxlength="15">
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-semibold">Shop Description</label>
+                  <textarea class="form-control" id="regShopDesc" rows="2" placeholder="Tell customers about your bakery..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terms -->
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                <label class="form-check-label" for="agreeTerms">
+                  I agree to the <a href="#" style="color:var(--primary)">Terms & Conditions</a> and <a href="#" style="color:var(--primary)">Privacy Policy</a>
+                </label>
+                <div class="invalid-feedback">You must agree to continue.</div>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary-custom w-100 py-2 fs-5" id="registerBtn" disabled>
+                <i class="bi bi-person-check me-2"></i>Create Account
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <p class="text-center mt-4 mb-0 text-muted">
+          Already have an account? <a href="login.html" style="color:var(--primary);font-weight:600">Sign In</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js?v=2"></script>
+<script>
+  const form = document.getElementById('registerForm');
+
+  // Role toggle
+  document.querySelectorAll('input[name="roleToggle"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const isVendor = radio.value === 'vendor';
+      document.getElementById('vendorFields').classList.toggle('d-none', !isVendor);
+      document.getElementById('regShopName').required = isVendor;
+    });
+  });
+
+  // Password strength
+  document.getElementById('regPassword').addEventListener('input', function() {
+    const val = this.value;
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    const colors = ['#e53935','#ff9800','#ffeb3b','#43a047'];
+    const labels = ['Weak','Fair','Good','Strong'];
+    const pct = (score / 4) * 100;
+    const fill = document.getElementById('strengthFill');
+    fill.style.width = pct + '%';
+    fill.style.background = colors[score-1] || '#eee';
+    document.getElementById('strengthLabel').textContent = score > 0 ? labels[score-1] : 'Enter password';
+    validateForm();
+  });
+
+  // Confirm password match
+  document.getElementById('regConfirm').addEventListener('input', function() {
+    const pwd = document.getElementById('regPassword').value;
+    const label = document.getElementById('matchLabel');
+    if (this.value === '') { label.textContent = ''; return; }
+    if (this.value === pwd) {
+      this.classList.add('is-valid'); this.classList.remove('is-invalid');
+      label.innerHTML = '<span style="color:#2e7d32">✓ Passwords match</span>';
+    } else {
+      this.classList.add('is-invalid'); this.classList.remove('is-valid');
+      label.innerHTML = '<span style="color:#e53935">✗ Passwords do not match</span>';
+    }
+    validateForm();
+  });
+
+  // Real-time validation
+  ['regName','regEmail','regPhone','regCity','regState'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', () => validateForm());
+  });
+  document.getElementById('agreeTerms').addEventListener('change', validateForm);
+
+  function validateForm() {
+    const name = document.getElementById('regName').value.trim();
+    const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('regEmail').value);
+    const pwd = document.getElementById('regPassword').value.length >= 8;
+    const confirm = document.getElementById('regConfirm').value === document.getElementById('regPassword').value && document.getElementById('regConfirm').value !== '';
+    const phone = /^\d{10}$/.test(document.getElementById('regPhone').value);
+    const city = document.getElementById('regCity').value.trim();
+    const state = document.getElementById('regState').value.trim();
+    const terms = document.getElementById('agreeTerms').checked;
+    const role = document.querySelector('input[name="roleToggle"]:checked').value;
+    const shopName = role === 'vendor' ? document.getElementById('regShopName').value.trim() : 'ok';
+    const valid = name && email && pwd && confirm && phone && city && state && terms && shopName;
+    document.getElementById('registerBtn').disabled = !valid;
+  }
+
+  // Phone: only digits
+  document.getElementById('regPhone').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '').slice(0, 10);
+    if (this.value.length === 10) { this.classList.add('is-valid'); this.classList.remove('is-invalid'); }
+    else { this.classList.add('is-invalid'); this.classList.remove('is-valid'); }
+  });
+
+  // Email validation
+  document.getElementById('regEmail').addEventListener('blur', function() {
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
+    this.classList.toggle('is-valid', valid);
+    this.classList.toggle('is-invalid', !valid && this.value !== '');
+  });
+
+  function togglePwd(id, btn) {
+    const input = document.getElementById(id);
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    btn.innerHTML = isText ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+  }
+
+  // Submit
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const role = document.querySelector('input[name="roleToggle"]:checked').value;
+    const user = {
+      id: Date.now(),
+      name: document.getElementById('regName').value.trim(),
+      email: document.getElementById('regEmail').value.trim().toLowerCase(),
+      password: document.getElementById('regPassword').value,
+      phone: document.getElementById('regPhone').value,
+      address: document.getElementById('regAddress').value,
+      city: document.getElementById('regCity').value,
+      state: document.getElementById('regState').value,
+      role: role,
+      shopName: document.getElementById('regShopName')?.value || '',
+      shopDesc: document.getElementById('regShopDesc')?.value || '',
+      gst: document.getElementById('regGST')?.value || '',
+      registeredAt: new Date().toISOString(),
+      orders: [],
+      wishlist: []
+    };
+    registerUser(user, document.getElementById('registerBtn'));
+  });
+</script>
+</body>
+</html>
